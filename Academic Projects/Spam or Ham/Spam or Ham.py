@@ -1,6 +1,5 @@
 import pandas as pd
 import os
-
 def read_spam():
     category = 'spam'
     directory = './enron1/spam'
@@ -28,7 +27,7 @@ ham = read_ham()
 spam = read_spam()
 
 df = pd.DataFrame.from_records(ham)
-df = df.append(pd.DataFrame.from_records(spam))
+df = pd.concat(pd.DataFrame.from_records(spam))
 #Data preprocessing
 import re
 
@@ -45,7 +44,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
 df = pd.DataFrame.from_records(ham)
-df = df.append(pd.DataFrame.from_records(spam))
+df = pd.concat(pd.DataFrame.from_records(spam))
 
 # The CountVectorizer converts a text sample into a vector (think of it as an array of floats).
 # Each entry in the vector corresponds to a single word and the value is the number of times the word appeared.
