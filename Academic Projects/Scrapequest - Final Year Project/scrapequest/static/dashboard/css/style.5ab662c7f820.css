@@ -1,0 +1,118 @@
+/* dashboard/css/style.css */
+
+/* General Reset and Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+.slider {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin: 20px auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.slides {
+    display: flex;
+    transition: all 0.5s ease;
+}
+
+/* Style for the slide containing the canvas */
+.slide {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+    background-color: #f9f9f9;
+    margin: auto; /* Automatically margin for centering the slide div */
+    max-width: 80%; /* Limits the width and centers the div */
+    border: 1px solid #ccc; /* Border around the slide/container */
+    box-shadow: 0px 10px 30px rgba(128, 128, 128, 0.5); /* Enhanced grey shadow for 3D effect */
+    padding: 20px;
+    border-radius: 4px; /* Optional: rounded corners for a smoother look */
+}
+
+canvas {
+    width: 100%; /* Set width to 100% of its parent */
+    height: auto; /* Set height to scale automatically */
+    max-height: 500px; /* You can adjust this as needed */
+}
+
+/* Media Queries for Responsive Adjustments */
+@media (max-width: 768px) {
+    .slide {
+        max-width: 95%; /* Allow a bit more width on smaller devices */
+    }
+
+    canvas {
+        max-height: 300px; /* Adjust height for smaller devices */
+    }
+}
+
+@media (max-width: 480px) {
+    .slide {
+        max-width: 100%; /* Allow full width on very small screens */
+        padding: 10px; /* Reduce padding on very small screens */
+    }
+
+    canvas {
+        max-height: 200px; /* Smaller max-height on mobile */
+    }
+}
+
+
+/* Navigation Dots */
+.dots {
+    text-align: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
+
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: grey;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+    background-color: #717171;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .slide {
+        padding: 20px;
+    }
+
+    canvas {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .slide {
+        padding: 10px;
+    }
+
+    canvas {
+        max-width: 100%;
+    }
+
+    .dots {
+        bottom: 5px;
+    }
+}

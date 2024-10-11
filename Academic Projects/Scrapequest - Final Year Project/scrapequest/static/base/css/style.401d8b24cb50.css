@@ -1,0 +1,138 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header and Navbar Styles */
+header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 10px 20px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar button, 
+.navbar a {
+    background: none;
+    border: none;
+    text-decoration: none;
+    color: #555;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.navbar h1 {
+    margin: 0;
+    color: #333;
+}
+
+/* Search Container */
+/* #search-container {
+    position: relative;
+}
+
+#search-input {
+    width: 300px;
+    padding: 8px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+#search-results {
+    position: absolute;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    z-index: 1000;
+} */
+
+/* Buttons Container */
+#content-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    #search-input {
+        width: 100%;
+    }
+
+    #content-buttons {
+        width: 100%;
+        justify-content: space-evenly;
+    }
+}
+
+/* Footer and Logout */
+#logout {
+    padding: 10px 0;
+}
+
+#logout button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#logout button:hover {
+    background-color: #e0e0e0;
+}
+
+/* Basic Button Styles */
+.btn, 
+.navbar button {
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    color: #333;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover, 
+.navbar button:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    cursor: pointer;
+}
+
+/* Enhancing Navbar Button Separation */
+.navbar button {
+    margin-right: 20px;  /* Adding space between navbar buttons */
+}
+
+/* Responsive Design Adjustments for Buttons */
+@media (max-width: 768px) {
+    .btn, 
+    .navbar button {
+        width: 100%;       /* Full width for smaller screens */
+        margin-top: 10px;
+    }
+}

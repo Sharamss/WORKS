@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div id="keyword-buttons-container" class="flex justify-center py-6 mb-4 w-full">
+  <div class="flex justify-center flex-wrap gap-6">
+    {% for keyword in results.keys %}
+    <button
+  class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded shadow"
+  onclick="showProjects('{{ keyword | slugify }}')"
+>
+  {{ keyword }}
+</button>
+
+    {% endfor %}
+  </div>
+</div>
+
+<div class="flex justify-center">
+  <div class="w-full max-w-6xl px-4">
+    {% for keyword, matches in results.items %}
+    <div id="{{ keyword | slugify }}-full" class="project-list hidden">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-8"> Showing Results For {{ keyword }}</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for project in matches.full_matches %}
+        <div class="project bg-white shadow-lg rounded-lg overflow-hidden">
+          <form action="{% url 'save_project' %}" method="post" onsubmit="handleFormSubmit(this.querySelector('.save-project-btn'), event)" class="p-6">
+            {% csrf_token %}
+            
+            <h3 class="text-xl font-semibold mb-4">{{ project.Name_of_the_Project }}</h3>
+            
+            {% for field, value in project.items %} 
+            {% if field != 'Name_of_the_Project' and field != 'Date' and value != 'N/A' %} 
+              {% if field == 'Link to the project' or field == 'Link to the Procurement' %}
+                <p class="mb-3"><span class="font-semibold">{{ field }}:</span> <a href="{{ value }}" target="_blank" class="text-blue-600 hover:text-blue-800">View</a></p>
+                <input type="hidden" name="link" value="{{ project.Link_to_the_project }}">
+              {% else %}
+                <p class="mb-3"><span class="font-semibold">{{ field }}:</span> {{ value }}</p>
+              {% endif %} 
+            {% endif %}    
+            {% endfor %}
+            <button type="button" class="save-project-btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" onclick="handleFormSubmit(this);">Save Project</button>
+          </form>
+        </div>
+        {% endfor %} 
+          </div>
+        </div>
+
+<div id="{{ keyword | slugify }}-partial" class="project-list hidden">
+  <div class="w-full border-t border-gray-300"></div>
+
+  <h2 class="pt-10 text-3xl font-bold text-center text-gray-800 mb-8">Related Results For {{ keyword }}</h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for project in matches.partial_matches %}
+    <div class="project bg-white shadow-lg rounded-lg overflow-hidden">
+      <form action="{% url 'save_project' %}" method="post" onsubmit="handleFormSubmit(this.querySelector('.save-project-btn'), event)" class="flex flex-col justify-between h-full p-6">
+        {% csrf_token %}
+        
+        <div>
+          <h3 class="text-xl font-semibold mb-4">{{ project.Name_of_the_Project }}</h3>
+          
+          {% for field, value in project.items %} 
+          {% if field != 'Name_of_the_Project' and field != 'Date' and value != 'N/A' %} 
+            {% if field == 'Link to the project' or field == 'Link to the Procurement' %}
+              <p class="mb-3"><span class="font-semibold">{{ field }}:</span> <a href="{{ value }}" target="_blank" class="text-blue-600 hover:text-blue-800">View</a></p>
+              <input type="hidden" name="link" value="{{ project.Link_to_the_project }}">
+            {% else %}
+              <p class="mb-3"><span class="font-semibold">{{ field }}:</span> {{ value }}</p>
+            {% endif %} 
+          {% endif %}    
+          {% endfor %}
+        </div>
+        
+        <button type="button" class="save-project-btn mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded self-end" onclick="handleFormSubmit(this);">Save Project</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
+
+
+<script src="{% static 'Project_details/js/script.js' %}"></script>
+
+{% comment %} saving the project {% endcomment %}
+<script>
+  function handleFormSubmit(clickedButton) {
+    var projectDiv = clickedButton.closest('.project');
+
+    // Serialize the details from the project div
+    var projectDetailsHTML = projectDiv.innerHTML;
+
+    var form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', '{% url 'save_project' %}');
+
+    // Add the CSRF token and project details to the form
+    var csrfInput = document.createElement('input');
+    csrfInput.setAttribute('type', 'hidden');
+    csrfInput.setAttribute('name', 'csrfmiddlewaretoken');
+    csrfInput.setAttribute('value', document.querySelector('[name="csrfmiddlewaretoken"]').value);
+    form.appendChild(csrfInput);
+
+    var contentInput = document.createElement('input');
+    contentInput.setAttribute('type', 'hidden');
+    contentInput.setAttribute('name', 'content');
+    contentInput.setAttribute('value', projectDetailsHTML);
+    form.appendChild(contentInput);
+
+    document.body.appendChild(form);
+
+    // Create a FormData object and append the content
+    var formData = new FormData(form);
+
+    // Make the fetch API call to send the POST request
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      credentials: 'same-origin' // Include cookies and CSRF token
+    })
+    .then(response => {
+      document.body.removeChild(form); // Clean up: remove the temporary form
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok: ' + response.statusText);
+      }
+      return response.json(); // Or response.text() if not returning JSON
+    })
+    .then(data => {
+      if(data.success) {
+        displaySuccessMessage(clickedButton, "Project has been saved successfully.");
+      }
+    })
+
+    .catch(error => {
+      console.error('Error:', error);
+      // Handle the error, possibly notify the user that the save action failed
+    });
+  }
+
+  function displaySuccessMessage(button, message) {
+    // Create a message element
+    var messageDiv = document.createElement('div');
+    messageDiv.classList.add(
+      'success-message',
+      'bg-green-100',
+      'border',
+      'border-green-400',
+      'text-green-700',
+      'px-4',
+      'py-3',
+      'rounded',
+      'relative',
+      'my-3',
+      'transition',
+      'duration-500',
+      'ease-in-out',
+      'transform',
+      'opacity-0'
+    );
+    messageDiv.textContent = message;
+    
+    // Insert the message in the DOM, for example, before the button
+    button.parentNode.insertBefore(messageDiv, button);
+    
+    // Fade in the message
+    setTimeout(() => {
+      messageDiv.classList.remove('opacity-0');
+      messageDiv.classList.add('opacity-100');
+    }, 100); // Fades in the message
+
+    // Fade out the message after some time
+    setTimeout(() => {
+      messageDiv.classList.remove('opacity-100');
+      messageDiv.classList.add('opacity-0');
+    }, 2900); // Starts fading out the message after 2.9 seconds
+
+    // Remove the message after it fades out
+    setTimeout(() => {
+      messageDiv.remove();
+    }, 5000); // Message will be removed after 5 seconds
+  }
+
+</script>
+  
+{% endblock %}

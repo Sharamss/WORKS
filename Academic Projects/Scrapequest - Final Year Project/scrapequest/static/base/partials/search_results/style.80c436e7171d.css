@@ -1,0 +1,61 @@
+.search-container {
+    position: relative;
+    display: flex;
+}
+
+.search-container input[type="text"] {
+    padding: 5px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.search-container button {
+    padding: 5px 10px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background-color: #666;
+}
+
+#search-results {
+    display: none; /* Initially hidden */
+    width: 375%; /* Width is restored to the original larger size */
+    max-height: 400px; /* Set max height for visible area */
+    background-color: #ddd; /* Light grey background for the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    left: -300%; /* Centering based on the size */
+    top: 162%; /* Aligning directly below the input area */
+    z-index: 1000;
+    overflow-y: auto; /* Allow vertical scrolling */
+    padding: 20px;
+    border-radius: 5px; /* Adds rounded corners */
+    transition: all 0.5s ease-out; /* Smooth transition for expanding */
+}
+
+.project {
+    background-color: #fff; /* Individual projects have a white background */
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.project:last-child {
+    border-bottom: none;
+}
+
+.project h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+}
+
+.project p {
+    margin: 10px 0;
+    font-size: 0.9em;
+}

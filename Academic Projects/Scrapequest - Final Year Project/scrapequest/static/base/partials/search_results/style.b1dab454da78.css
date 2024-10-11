@@ -1,0 +1,79 @@
+.search-container {
+    position: relative;
+    display: flex;
+}
+
+.search-container input[type="text"] {
+    padding: 5px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.search-container button {
+    padding: 5px 10px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background-color: #666;
+}
+
+#search-results {
+    display: none; /* Initially hidden */
+    width: 320%; /* Width adjusted to 100% to fit the container */
+    max-height: 800px; /* Set max height for visible area */
+    background-color: rgba(200, 200, 200, 0.5); /* Semi-transparent grey */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    left: -100%;
+    top: 162%; /* Align directly below the search input */
+    z-index: 1000;
+    overflow-y: auto; /* Allow vertical scrolling */
+    border-radius: 5px; /* Adds rounded corners */
+    transition: all 0.5s ease-out; /* Smooth transition for expanding */
+    padding: 20px;
+}
+
+.project {
+    background-color: whitesmoke;
+    border: 2px solid darkgray;
+    border-radius: 10px;
+    padding: 20px 20px 20px 20px;
+    cursor: pointer;
+    font-size: medium;
+    font-family: sans-serif;
+}
+
+.project:hover{
+    color: black;
+}
+
+.project:last-child {
+    border-bottom: none;
+}
+
+.project h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+
+.project p {
+    margin: 10px 0;
+    font-size: 0.9em;
+}
+
+#search-results a {
+    color: blue;
+    text-decoration: none; /* Removes underline */
+}
+
+a:hover {
+    color: darkblue;
+}

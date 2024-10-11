@@ -1,0 +1,9 @@
+#keyword-buttons-container {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  #keyword-buttons-container button {
+    scroll-snap-align: start;
+  }
+  

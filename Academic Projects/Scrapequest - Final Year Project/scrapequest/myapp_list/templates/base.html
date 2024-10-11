@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCRAPEQUEST</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'base/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'base/partials/search_results/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center py-6">
+            <!-- SCRAPEQUEST Text -->
+            <div class="flex items-center">
+                <a href="{% url 'homepage' %}" class="text-3xl font-bold text-gray-800 hover:text-gray-600" id="home">SCRAPEQUEST</a>
+            </div>
+
+            <!-- Search Container -->
+            <div class="flex-1 flex justify-center">
+                <div id="search-container" class="search-container relative" data-search-url="{% url 'search_bar' %}">
+                    <input type="text" id="search-input" class="border border-gray-300 rounded-md py-2 px-4" placeholder="Search..." onfocus="toggleSearchResults(true)" oninput="fetchSearchResults()">
+                    <div id="search-results" class="absolute z-50 bg-white shadow-md rounded px-2 py-1 text-sm w-56 hidden"></div>
+                </div>
+            </div>
+
+            <!-- Greeting and Logout -->
+            <div class="flex items-center">
+                <span class="text-gray-700 font-medium mr-4">Hi, {{ user.username }}!</span>
+                <div id="logout">
+                    <form action="/logout/" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="border border-gray-300 rounded-md py-2 px-4 hover:bg-gray-100 focus:outline-none">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lower Navigation Links -->
+        <!-- Lower Navigation Links -->
+    <div class="border-t border-gray-200">
+        <nav class="max-w-7xl mx-auto px-4 flex justify-center space-x-6 py-3">
+        <a href="{% url 'project_list' %}" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-base font-medium" id="project-list">Filter via Organizations</a>
+        <a href="{% url 'search_by_keyword' %}" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-base font-medium" id="show-project-details">Filter via Keywords</a>
+        <a href="{% url 'view_saved_project' %}" class="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-base font-medium" id="show-saved-project">Saved Projects</a>
+        </nav>
+    </div>
+
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Content from Django's views -->
+        {% endblock %}
+    </main>
+
+    <script src="{% static 'base/js/script.js' %}"></script>
+    <script src="{% static 'base/partials/search_results/custom.js' %}"></script>
+</body>
+</html>

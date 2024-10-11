@@ -1,0 +1,47 @@
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full mx-4">
+        <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% if messages %}
+                <div class="space-y-2">
+                    {% for message in messages %}
+                        <p class="bg-red-100 border-l-4 border-red-500 text-red-700 p-2" role="alert">
+                            {{ message }}
+                        </p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="space-y-1">
+                {{ form.username.label_tag }}
+                {{ form.username|add_class:"block w-full border-2 border-gray-300 rounded-md py-2 px-4 mb-3 leading-tight focus:outline-none focus:border-green-500" }}
+                {% if form.username.errors %}
+                    <p class="text-red-500 text-xs italic">{{ form.username.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="space-y-1">
+                {{ form.password.label_tag }}
+                {{ form.password|add_class:"block w-full border-2 border-gray-300 rounded-md py-2 px-4 mb-3 leading-tight focus:outline-none focus:border-green-500" }}
+                {% if form.password.errors %}
+                    <p class="text-red-500 text-xs italic">{{ form.password.errors }}</p>
+                {% endif %}
+            </div>
+            <button type="submit" class="w-full bg-green-200 hover:bg-green-300 text-gray-800 font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300">Login</button>
+            <p class="mt-6 text-center">Don't have an account? <a href="{% url 'signup' %}" class="text-green-600 hover:text-green-800">Sign up</a></p>
+            <p class="text-center">Login as admin? <a href="/admin/" class="text-green-600 hover:text-green-800">Login as Admin</a></p>
+        </form>
+    </div>
+</body>
+</html>

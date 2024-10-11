@@ -1,0 +1,55 @@
+/* dashboard/css/style.css */
+
+.slider {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin: 20px auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+  
+.slides {
+    display: flex;
+    transition: all 0.5s ease;
+}
+  
+.slide1, .slide2, .slide3 {
+    width: 100%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 40px;
+}
+  
+canvas {
+    justify-content: center;
+    align-items: center;
+    max-width: 90%;
+    max-height: 400px;
+}
+
+/* Update the .dots class to adjust its position below the chart */
+.dots {
+    text-align: center;
+    justify-content: center;
+    position:relative;
+    width: 100%;
+}
+  
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: grey;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+  
+.active, .dot:hover {
+    background-color: #717171;
+}
+

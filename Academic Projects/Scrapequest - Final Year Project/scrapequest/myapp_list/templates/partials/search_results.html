@@ -1,0 +1,28 @@
+{% if results %}
+{% for organization, projects in results.items %}
+<div class="organization">
+    <h2 class="text-xl font-bold text-gray-800 mb-4">{{ organization }} Projects</h2>
+    <div class="project-container space-y-4">
+        {% for project in projects %}
+        <div class="project bg-white border border-gray-300 rounded-lg p-4 hover:shadow-lg transition-shadow duration-300">
+            <h3 class="text-lg font-semibold text-gray-700">{{ project.Name_of_the_Project }}</h3>
+            {% for field, value in project.items %}
+            {% if field != 'Name_of_the_Project' and field != 'Date' and value != 'N/A' %}
+                <p class="text-gray-600">
+                    {{ field }}: 
+                    {% if field == 'Link to the project' or field == 'Link to the Procurement' %}
+                        <a href="{{ value }}" target="_blank" class="text-blue-600 hover:text-blue-800">View</a>
+                    {% else %}
+                        {{ value }}
+                    {% endif %}
+                </p>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+{% else %}
+    <p class="text-gray-600">No results found.</p>
+{% endif %}

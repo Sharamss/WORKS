@@ -1,0 +1,4 @@
+.project:hover {
+      box-shadow: 0 10px 15px -3px rgba(55, 65, 81, 0.3), 0 4px 6px -2px rgba(55, 65, 81, 0.5);
+      transform: translateY(-5px);
+}

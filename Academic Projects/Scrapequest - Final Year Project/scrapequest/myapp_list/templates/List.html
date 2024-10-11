@@ -1,0 +1,287 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+<!-- Load Tailwind CSS for styling -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+{% load dict_filter %}
+
+<div class="container mx-auto p-6">
+   <!-- Project Buttons -->
+   <div class="flex flex-wrap gap-2 justify-center p-4">
+    <button onclick="showProjects('UNDP')" class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded">UNDP</button>
+    <button onclick="showProjects('UNFAO')" class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded">UNFAO</button>
+    <button onclick="showProjects('USAID')" class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded">USAID</button>
+    <button onclick="showProjects('JICA')" class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded">JICA</button>
+    <button onclick="showProjects('ADB')" class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded">ADB</button>
+    <button onclick="showProjects('WB')" class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded">WB</button>
+    <button onclick="showProjects('UKAID')" class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded">UKAID</button>
+    <button onclick="showProjects('SDC')" class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded">SDC</button>
+  </div>
+   
+<!-- UNDP Projects -->
+<div id="UNDP" class="project-list hidden">
+  <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">UNDP Projects</h1>
+  <div class="projects-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for UNDPproject in UNDPprojects %}
+    <div class="project bg-white p-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+      <form action="{% url 'save_project' %}" method="post" onsubmit="handleFormSubmit(this, event)" class="space-y-4">
+        {% csrf_token %}
+        <h2 class="text-lg font-semibold">{{ UNDPproject.Name }}</h2>
+        <div>
+          <a href="{{ UNDPproject.Link }}" target="_blank" class="text-blue-500 hover:text-blue-600 transition duration-300">View Project</a>
+        </div>
+        <button type="button" class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300" onclick="handleFormSubmit(this);">
+          Save Project
+        </button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- UNFAO Projects -->
+<div id="UNFAO" class="project-list hidden">
+  <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">UNFAO Projects</h1>
+  <div class="projects-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for UNFAOproject in UNFAOprojects %}
+    <div class="project bg-white p-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+      <form action="{% url 'save_project' %}" method="post" onsubmit="handleFormSubmit(this, event)" class="space-y-3">
+        {% csrf_token %}
+        <h2 class="text-lg font-semibold">{{ UNFAOproject.Name }}</h2>
+        <p class="text-gray-600">Duration: {{ UNFAOproject.Duration }}</p>
+        <div>
+          <a href="{{ UNFAOproject.Link }}" target="_blank" class="text-blue-500 hover:text-blue-600 transition duration-300">View Project</a>
+        </div>
+        <button type="button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300" onclick="handleFormSubmit(this);">
+          Save Project
+        </button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- USAID Projects -->
+<div id="USAID" class="project-list hidden">
+  <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">USAID Projects</h1>
+  <div class="projects-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for USAIDproject in USAIDprojects %}
+    <div class="project bg-white p-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+      <form action="{% url 'save_project' %}" method="post" onsubmit="handleFormSubmit(this, event)" class="space-y-3">
+        {% csrf_token %}
+        <h2 class="text-lg font-semibold">{{ USAIDproject.Name }}</h2>
+        <p class="text-gray-600">Duration: {{ USAIDproject.Duration }}</p>
+        <p class="text-gray-600">Sector: {{ USAIDproject.Sector }}</p>
+        <div class="flex justify-between items-center mt-4">
+          <button type="button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300" onclick="handleFormSubmit(this);">
+            Save Project
+          </button>
+        </div>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- WB Projects -->
+<div id="WB" class="project-list hidden">
+  <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">WB Projects</h1>
+  <div class="projects-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for WBproject in WBprojects %}
+    <div class="project bg-white p-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+      <form action="{% url 'save_project' %}" method="post" onsubmit="handleFormSubmit(this, event)" class="space-y-3">
+        {% csrf_token %}
+        <h2 class="text-lg font-semibold">{{ WBproject.Name }}</h2>
+        <a href="{{ WBproject.Project_Link }}" target="_blank" class="text-blue-500 hover:text-blue-600 transition duration-300">View Project</a>
+        <p class="text-gray-600">{{ WBproject.Details }}</p>
+        <a href="{{ WBproject.Procurement_Link }}" target="_blank" class="text-blue-500 hover:text-blue-600 transition duration-300">Procurement Details</a>
+        <p class="text-gray-600">Published: {{ WBproject.Published_Date }}</p>
+        <button type="button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300" onclick="handleFormSubmit(this);">
+          Save Project
+        </button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ADB Projects -->
+<div id="ADB" class="project-list hidden">
+  <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">ADB Projects</h1>
+  <div class="projects-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for ADBproject in ADBprojects %}
+    <div class="project bg-white p-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+      <form action="{% url 'save_project' %}" method="post" onsubmit="handleFormSubmit(this, event)" class="space-y-3">
+        {% csrf_token %}
+      <h2 class="text-lg font-semibold">{{ ADBproject.Name }}</h2>
+      
+
+      <a href="{{ ADBproject.Link }}" target="_blank" class="text-blue-500 hover:text-blue-600 transition duration-300">View Project</a>
+
+      <p class="text-gray-600">Status: {{ ADBproject.Status }}</p>
+
+      <p class="text-gray-600">Description: {{ ADBproject.Desc }}</p>
+      <button type="button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300" onclick="handleFormSubmit(this);">Save Project</button>
+      </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+<!-- JICA Projects -->
+<div id="JICA" class="project-list hidden">
+  <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">JICA Projects</h1>
+  <div class="projects-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for JICAproject in JICAprojects %}
+    <div class="project bg-white p-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+      <form action="{% url 'save_project' %}" method="post" onsubmit="handleFormSubmit(this, event)" class="space-y-3">
+        {% csrf_token %}
+      <h2 class="text-lg font-semibold">{{ JICAproject.Name }}</h2>
+
+      <a href="{{ JICAproject.Link }}" target="_blank" class="text-blue-500 hover:text-blue-600 transition duration-300">View Project</a>
+      <button type="button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300" onclick="handleFormSubmit(this);">Save Project</button>
+      </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+<div id="UKAID" class="project-list hidden">
+  <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">UKAID Projects</h1>
+  <div class="projects-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for UKAIDproject in UKAIDprojects %}
+    <div class="project bg-white p-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+      <form action="{% url 'save_project' %}" method="post" onsubmit="handleFormSubmit(this, event)" class="space-y-3">
+        {% csrf_token %}
+      <h2 class="text-lg font-semibold">{{ UKAIDproject.Name }}</h2>
+
+      <a href="{{ UKAIDproject.Link }}" target="_blank" class="text-blue-500 hover:text-blue-600 transition duration-300">View Project</a>
+      <p class="text-gray-600">Project Details: {{ UKAIDproject.Desc }}</p>
+      <p class="text-gray-600">Start Date: {{ UKAIDproject.Date }}</p>
+
+      <button type="button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300" onclick="handleFormSubmit(this);">Save Project</button>
+      </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+<div id="SDC" class="project-list hidden">
+  <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">SDC Projects</h1>
+  <div class="projects-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for SDCproject in SDCprojects %}
+    <div class="project bg-white p-6 rounded-lg shadow-md transition duration-300 ease-in-out">
+      <form action="{% url 'save_project' %}" method="post" onsubmit="handleFormSubmit(this, event)" class="space-y-3">
+        {% csrf_token %}
+      <h2 class="text-lg font-semibold">{{ SDCproject.Name }}</h2>
+
+      <a href="{{ SDCproject.Link }}" target="_blank" class="text-blue-500 hover:text-blue-600 transition duration-300">View Project</a>
+      <p class="text-gray-600">Project Details: {{ SDCproject.Desc }}</p>
+      <p class="text-gray-600">Duration: {{ SDCproject.Duration }}</p>
+
+      <button type="button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300" onclick="handleFormSubmit(this);">Save Project</button>
+      </div>
+    {% endfor %}
+
+  </div>
+</div>
+</div>
+
+<script>
+  function handleFormSubmit(clickedButton) {
+    var projectDiv = clickedButton.closest('.project');
+    if (!projectDiv) {
+        console.error('Project div not found');
+        return;
+    }
+
+    var projectDetailsHTML = projectDiv.innerHTML;
+
+    var form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', '{% url 'save_project' %}');
+
+    var csrfInput = document.createElement('input');
+    csrfInput.setAttribute('type', 'hidden');
+    csrfInput.setAttribute('name', 'csrfmiddlewaretoken');
+    csrfInput.setAttribute('value', document.querySelector('[name="csrfmiddlewaretoken"]').value);
+    form.appendChild(csrfInput);
+
+    var contentInput = document.createElement('input');
+    contentInput.setAttribute('type', 'hidden');
+    contentInput.setAttribute('name', 'content');
+    contentInput.setAttribute('value', projectDetailsHTML);
+    form.appendChild(contentInput);
+
+    document.body.appendChild(form); // Add form to the DOM for submission
+
+    var formData = new FormData(form);
+
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      credentials: 'same-origin'
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok: ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.success) {
+        displaySuccessMessage(clickedButton, "Project has been saved successfully.");
+      } 
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    })
+    .finally(() => {
+      document.body.removeChild(form); // Ensure form is removed after operation
+    });
+}
+
+
+  function displaySuccessMessage(button, message) {
+    // Create a message element
+    var messageDiv = document.createElement('div');
+    messageDiv.classList.add(
+      'success-message',
+      'bg-green-100',
+      'border',
+      'border-green-400',
+      'text-green-700',
+      'px-4',
+      'py-3',
+      'rounded',
+      'relative',
+      'my-3',
+      'transition',
+      'duration-500',
+      'ease-in-out',
+      'transform',
+      'opacity-0'
+    );
+    messageDiv.textContent = message;
+    
+    // Insert the message in the DOM
+    button.parentNode.insertBefore(messageDiv, button);
+    
+    // Fade in the message
+    setTimeout(() => {
+      messageDiv.classList.remove('opacity-0');
+      messageDiv.classList.add('opacity-100');
+    }, 100); // Fades in the message
+
+    // Fade out the message after some time
+    setTimeout(() => {
+      messageDiv.classList.remove('opacity-100');
+      messageDiv.classList.add('opacity-0');
+    }, 2900); // Starts fading out the message after 2.9 seconds
+
+    // Remove the message after it fades out
+    setTimeout(() => {
+      messageDiv.remove();
+    }, 5000); 
+  }
+</script>
+<script src="{% static 'List/js/script.js' %}"></script>
+{% endblock %}
